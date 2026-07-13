@@ -33,7 +33,9 @@
     min-height:100vh;
     display:flex;flex-direction:column;
   }
-  html, body{overflow-x:hidden;max-width:100%;}
+  /* overflow-x:hidden on html/body breaks position:sticky — clip keeps the
+     horizontal overflow protection without disabling the sticky header */
+  html, body{overflow-x:clip;max-width:100%;}
   ::selection{background:var(--amber);color:#fff;}
   a{color:var(--steel);text-decoration:none;}
   a:hover{color:var(--amber-deep);}
@@ -66,7 +68,7 @@
   .nav-links a.active::after{transform:scaleX(1);}
 
   /* ---------- page system ---------- */
-  main{flex:1;overflow-x:hidden;}
+  main{flex:1;overflow-x:clip;}
   .page{display:none;}
   .page.active{display:block;}
   @keyframes slideInRight{from{opacity:0;transform:translateX(48px);}to{opacity:1;transform:none;}}
@@ -362,7 +364,7 @@
         </div>
 
         <div class="arm-panel">
-          <svg id="cvSvg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive demo — a three-camera vision system watches a conveyor while a robot arm picks packages. Move your cursor to detect packages.">
+          <svg id="cvSvg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive demo — a three-camera vision system watches a conveyor while a gantry robot picks packages and places them at the end of the line. Move your cursor to detect packages.">
             <defs>
               <pattern id="gp" width="26" height="26" patternUnits="userSpaceOnUse">
                 <path d="M26 0H0V26" fill="none" stroke="rgba(51,88,122,0.10)" stroke-width="1"/>
@@ -419,7 +421,7 @@
             <g id="pkgLayer"></g>
             <g id="detLayer"></g>
 
-            <!-- pick-and-place robot at the end of the line -->
+            <!-- pick-and-place gantry robot at the end of the line -->
             <g id="picker">
               <!-- pedestal + column -->
               <rect x="428" y="330" width="72" height="14" rx="2" fill="#171B1E"/>
@@ -427,14 +429,16 @@
               <!-- boom over the belt -->
               <rect x="340" y="196" width="120" height="12" rx="3" fill="#171B1E"/>
               <circle cx="458" cy="202" r="5" fill="#FBFBFA" stroke="#171B1E" stroke-width="2"/>
-              <!-- z-axis carriage (fixed) -->
-              <rect x="348" y="190" width="16" height="24" rx="2" fill="#33587A"/>
-              <!-- sliding rod + gripper (animated) -->
-              <g id="zRod">
-                <rect x="352" y="214" width="8" height="8" fill="#171B1E"/>
-                <rect x="342" y="222" width="28" height="10" rx="2" fill="#171B1E"/>
-                <rect x="344" y="232" width="5" height="14" fill="#171B1E"/>
-                <rect x="363" y="232" width="5" height="14" fill="#171B1E"/>
+              <!-- x-axis carriage: slides along the boom (animated) -->
+              <g id="carriage">
+                <rect x="348" y="190" width="16" height="24" rx="2" fill="#33587A"/>
+                <!-- z-axis sliding rod + gripper (animated) -->
+                <g id="zRod">
+                  <rect x="352" y="214" width="8" height="8" fill="#171B1E"/>
+                  <rect x="342" y="222" width="28" height="10" rx="2" fill="#171B1E"/>
+                  <rect x="344" y="232" width="5" height="14" fill="#171B1E"/>
+                  <rect x="363" y="232" width="5" height="14" fill="#171B1E"/>
+                </g>
               </g>
             </g>
 
@@ -599,7 +603,7 @@
   <div class="page" id="page-skills">
     <div class="wrap page-body">
       <div class="page-head stagger">
-        <h2>Technical skills</h2>
+        <h2>Technical Skills</h2>
         <p class="sub">The full stack from deep learning inference on embedded GPUs to industrial robot and PLC programming.</p>
       </div>
       <div class="bom">
@@ -651,7 +655,7 @@
   <div class="page" id="page-education">
     <div class="wrap page-body">
       <div class="page-head stagger">
-        <h2>Education &amp; awards</h2>
+        <h2>Education &amp; Awards</h2>
         <p class="sub">Formal training in robotics and mechanical engineering, with recognition along the way.</p>
       </div>
       <div class="edu-grid">
@@ -755,7 +759,7 @@
 
   show(location.hash ? location.hash.replace('#','') : 'home');
 
-  // ---------- computer vision demo: detection + robotic picking ----------
+  // ---------- computer vision demo: detection + robotic pick-and-place ----------
   const SVGNS = 'http://www.w3.org/2000/svg';
   const svg = document.getElementById('cvSvg');
   const pkgLayer = document.getElementById('pkgLayer');
@@ -763,13 +767,16 @@
   const beltMarks = document.getElementById('beltMarks');
   const reticle = document.getElementById('reticle');
   const camLeds = svg.querySelectorAll('.camLed');
+  const carriage = document.getElementById('carriage');
   const zRod = document.getElementById('zRod');
 
   const BELT_Y = 300;          // top of belt
   const BELT_SPEED = 0.7;      // constant conveyor speed (px per frame @60fps)
   const SCAN_R = 90;           // detection radius around cursor
-  const PICK_X = 356;          // gripper centreline
+  const PICK_X = 356;          // gripper centreline at the pick (home) position
+  const DROP_OFF = 88;         // horizontal carriage travel to the place position over the pedestal
   const GRIP_BOTTOM = 232;     // gripper pad bottom y when zOff = 0
+  const X_SPEED = 1.8;         // carriage traverse speed along the boom
   const CLASSES = ['pkg', 'box', 'crate'];
   const KRAFT = ['#C9A876', '#B99763', '#D4B788'];
 
@@ -857,10 +864,12 @@
   let scanX = 210;         // auto-scan position when no pointer
   let beltShift = 0;
 
-  // picker state machine
-  let pickState = 'idle';  // idle | descend | lift | fade
+  // picker state machine — full pick-and-place cycle:
+  // idle -> descend (z down) -> lift (z up) -> carry (x traverse to pedestal)
+  //      -> fade (place/release) -> return (x traverse back) -> idle
+  let pickState = 'idle';
   let held = null;
-  let zOff = 0, zTarget = 0, fadeT = 1;
+  let zOff = 0, zTarget = 0, xOff = 0, fadeT = 1;
 
   function svgPoint(ev){
     const pt = svg.createSVGPoint();
@@ -920,7 +929,7 @@
           p.x = frontLimit - 14 - p.w;   // queue up behind the box ahead
         }
       }
-      const airborne = (p === held && (pickState === 'lift' || pickState === 'fade'));
+      const airborne = (p === held && (pickState === 'lift' || pickState === 'carry' || pickState === 'fade'));
       if (!respawned && !airborne) frontLimit = Math.min(frontLimit, p.x);
     });
 
@@ -933,8 +942,10 @@
         pickState = 'descend';
       }
       let y;
-      if (p === held && (pickState === 'lift' || pickState === 'fade')){
-        y = GRIP_BOTTOM + zOff;                    // box travels with the gripper
+      if (p === held && (pickState === 'lift' || pickState === 'carry' || pickState === 'fade')){
+        // box travels with the gripper: vertically on lift, horizontally on carry
+        p.x = PICK_X - p.w/2 + xOff;
+        y = GRIP_BOTTOM + zOff;
       } else {
         y = BELT_Y - p.h;
       }
@@ -958,13 +969,16 @@
       }
     });
 
-    // picker cycle: descend -> lift -> fade out -> recycle
+    // manipulator cycle: descend -> lift -> carry to pedestal -> place -> return
     if (pickState === 'descend'){
       zOff = Math.min(zTarget, zOff + 2.2*dt);
       if (zOff >= zTarget) pickState = 'lift';
     } else if (pickState === 'lift'){
       zOff = Math.max(0, zOff - 1.6*dt);
-      if (zOff <= 0){ pickState = 'fade'; fadeT = 1; }
+      if (zOff <= 0) pickState = 'carry';
+    } else if (pickState === 'carry'){
+      xOff = Math.min(DROP_OFF, xOff + X_SPEED*dt);   // carriage traverses the boom with the box
+      if (xOff >= DROP_OFF){ pickState = 'fade'; fadeT = 1; }
     } else if (pickState === 'fade'){
       fadeT = Math.max(0, fadeT - 0.05*dt);
       if (held) held.g.setAttribute('opacity', fadeT);
@@ -972,9 +986,14 @@
         held.g.setAttribute('opacity', '1');
         recycle(held);
         held = null;
-        pickState = 'idle';
+        pickState = 'return';                          // released — head back to the pick point
       }
+    } else if (pickState === 'return'){
+      xOff = Math.max(0, xOff - X_SPEED*dt);
+      if (xOff <= 0){ xOff = 0; pickState = 'idle'; }
     }
+    // carriage moves along the boom (x); the z-rod slides within the carriage (y)
+    carriage.setAttribute('transform','translate('+xOff+',0)');
     zRod.setAttribute('transform','translate(0,'+zOff+')');
   }
 
