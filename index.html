@@ -100,24 +100,28 @@
     display:grid;grid-template-columns:1.08fr .92fr;gap:40px;
     align-items:center;padding:64px 0 56px;
   }
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--steel);
-    display:flex;align-items:center;gap:10px;margin-bottom:18px;
-  }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--steel);}
   h1{
     font-family:'Chakra Petch',sans-serif;font-weight:700;
     font-size:clamp(38px,5vw,56px);line-height:1.06;letter-spacing:-0.01em;
-    margin-bottom:20px;
+    margin-bottom:10px;
   }
   h1 .accent{color:var(--amber-deep);}
+  .hero-sub{
+    font-family:'Chakra Petch',sans-serif;font-weight:600;
+    font-size:clamp(17px,2.3vw,23px);line-height:1.35;
+    color:var(--steel);margin-bottom:14px;
+  }
+  .tagline{
+    font-family:'Chakra Petch',sans-serif;font-weight:500;
+    font-size:clamp(16px,2vw,20px);margin-bottom:16px;
+  }
+  .tagline .accent{color:var(--amber-deep);}
   .lede{font-size:17px;color:var(--ink-soft);max-width:56ch;margin-bottom:26px;}
   .spec-plate{
     background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
     font-family:'IBM Plex Mono',monospace;font-size:12.5px;
-    display:grid;grid-template-columns:repeat(3,1fr);
-    margin-bottom:26px;max-width:600px;
+    display:grid;grid-template-columns:repeat(2,1fr);
+    margin-bottom:26px;max-width:560px;
     box-shadow:0 1px 0 rgba(23,27,30,.04);
   }
   .spec-plate div{padding:10px 14px;border-right:1px solid var(--line-soft);}
@@ -136,6 +140,7 @@
   .btn-ghost{color:var(--ink);}
   .btn-ghost:hover{border-color:var(--amber-deep);color:var(--amber-deep);}
   .btn .li-icon{flex-shrink:0;display:block;}
+  .btn .mail-ic{font-size:22px;line-height:1;}
 
   /* arm — clean, no labels */
   .arm-panel{position:relative;}
@@ -288,9 +293,9 @@
     .nav{height:auto;flex-direction:column;align-items:flex-start;padding:10px 0;}
     .explore-grid{grid-template-columns:1fr;}
     .bom{grid-template-columns:1fr;}
-    .spec-plate{grid-template-columns:1fr 1fr;}
-    .spec-plate div:nth-child(2){border-right:none;}
-    .spec-plate div:nth-child(3){border-top:1px solid var(--line-soft);grid-column:1/-1;border-right:none;}
+    .spec-plate{grid-template-columns:1fr;}
+    .spec-plate div{border-right:none;}
+    .spec-plate div + div{border-top:1px solid var(--line-soft);}
     .wrap{padding:0 18px;}
 
     .cta-row{flex-direction:column;align-items:stretch;}
@@ -303,7 +308,9 @@
       text-align:center;
     }
 
-    h1{font-size:clamp(30px,8.5vw,38px);}
+    h1{font-size:clamp(30px,9vw,38px);}
+    .hero-sub{font-size:15.5px;}
+    .tagline{font-size:15px;}
     .lede{font-size:15.5px;}
     .contact-big{font-size:clamp(24px,7vw,32px);}
   }
@@ -332,29 +339,29 @@
     <div class="hero">
       <div class="wrap hero-inner">
         <div>
-          <p class="eyebrow stagger">Robotics Software Engineer · Industrial Robotics · Computer Vision · Perception</p>
-          <h1 class="stagger">I teach industrial robots <span class="accent">to see</span> — and ship what they learn to the factory floor.</h1>
+          <h1 class="stagger">Naren Niranjan P R</h1>
+          <p class="hero-sub stagger">Robotics Software Engineer · Industrial Robotics · Computer Vision · Perception</p>
+          <p class="tagline stagger">From <span class="accent">pixels to picks</span> — vision software that puts industrial robots to work.</p>
           <p class="lede stagger">
-            Robotics software engineer building AI-based perception for industrial automation:
-            real-time computer vision, sensor fusion, SLAM, and robot programming across
-            FANUC, ABB, and Yaskawa platforms. Currently completing an M.Sc. in Robotics
-            at the University of Twente, researching monocular depth estimation for
-            robotic picking on NVIDIA Jetson.
+            I build AI-based perception for industrial automation — real-time computer
+            vision, sensor fusion, SLAM, and robot programming across FANUC, ABB, and
+            Yaskawa platforms. Currently completing an M.Sc. in Robotics at the
+            University of Twente, and actively looking for opportunities in robotics
+            software, computer vision, AI-based perception, and industrial automation.
           </p>
           <div class="spec-plate stagger" aria-label="Profile summary">
-            <div><span class="k">Location</span><span class="v">Harderwijk, NL</span></div>
-            <div><span class="k">Focus</span><span class="v">Perception · ROS 2 · Industrial robots</span></div>
-            <div><span class="k">Now</span><span class="v">MSc thesis @ AWL-Techniek</span></div>
+            <div><span class="k">Location</span><span class="v">Netherlands · ready to relocate</span></div>
+            <div><span class="k">Focus</span><span class="v">Robotics software · Computer vision · AI</span></div>
           </div>
           <div class="cta-row stagger">
-            <a class="btn btn-primary" href="mailto:narenniranjanpr@gmail.com">✉ narenniranjanpr@gmail.com</a>
+            <a class="btn btn-primary" href="mailto:narenniranjanpr@gmail.com"><span class="mail-ic">✉</span> narenniranjanpr@gmail.com</a>
             <a class="btn btn-ghost" href="tel:+31647618666">☎ +31 6 47618666</a>
             <a class="btn btn-ghost" href="https://www.linkedin.com/in/narenniranjan2910/" target="_blank" rel="noopener"><svg class="li-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z"/></svg> LinkedIn</a>
           </div>
         </div>
 
         <div class="arm-panel">
-          <svg id="cvSvg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive computer vision demo — move your cursor over the conveyor to detect packages.">
+          <svg id="cvSvg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive demo — a three-camera vision system watches a conveyor while a robot arm picks packages. Move your cursor to detect packages.">
             <defs>
               <pattern id="gp" width="26" height="26" patternUnits="userSpaceOnUse">
                 <path d="M26 0H0V26" fill="none" stroke="rgba(51,88,122,0.10)" stroke-width="1"/>
@@ -362,30 +369,73 @@
             </defs>
             <rect width="520" height="400" fill="url(#gp)"/>
 
-            <!-- camera unit, top center -->
-            <g id="camera">
-              <line x1="260" y1="18" x2="260" y2="52" stroke="#171B1E" stroke-width="3"/>
-              <rect x="236" y="52" width="48" height="30" rx="3" fill="#171B1E"/>
-              <circle cx="260" cy="67" r="8" fill="#FBFBFA"/>
-              <circle cx="260" cy="67" r="4" fill="#33587A"/>
-              <circle id="camLed" cx="276" cy="59" r="2.6" fill="#E08D00"/>
-              <!-- field of view -->
-              <path d="M260 84 L80 300 M260 84 L440 300" stroke="rgba(51,88,122,0.30)" stroke-width="1" stroke-dasharray="4 6"/>
+            <!-- multi-camera rig above the conveyor -->
+            <g id="cameraRig">
+              <line x1="90" y1="0" x2="90" y2="22" stroke="#171B1E" stroke-width="3"/>
+              <line x1="350" y1="0" x2="350" y2="22" stroke="#171B1E" stroke-width="3"/>
+              <rect x="70" y="22" width="300" height="8" rx="2" fill="#171B1E"/>
+
+              <!-- cam 1 -->
+              <g class="cam">
+                <line x1="120" y1="30" x2="120" y2="44" stroke="#171B1E" stroke-width="3"/>
+                <rect x="100" y="44" width="40" height="26" rx="3" fill="#171B1E"/>
+                <circle cx="120" cy="57" r="7" fill="#FBFBFA"/>
+                <circle cx="120" cy="57" r="3.5" fill="#33587A"/>
+                <circle class="camLed" cx="133" cy="50" r="2.4" fill="#E08D00"/>
+                <path d="M120 70 L60 300 M120 70 L180 300" stroke="rgba(51,88,122,0.25)" stroke-width="1" stroke-dasharray="4 6"/>
+              </g>
+              <!-- cam 2 -->
+              <g class="cam">
+                <line x1="220" y1="30" x2="220" y2="44" stroke="#171B1E" stroke-width="3"/>
+                <rect x="200" y="44" width="40" height="26" rx="3" fill="#171B1E"/>
+                <circle cx="220" cy="57" r="7" fill="#FBFBFA"/>
+                <circle cx="220" cy="57" r="3.5" fill="#33587A"/>
+                <circle class="camLed" cx="233" cy="50" r="2.4" fill="#E08D00"/>
+                <path d="M220 70 L160 300 M220 70 L280 300" stroke="rgba(51,88,122,0.25)" stroke-width="1" stroke-dasharray="4 6"/>
+              </g>
+              <!-- cam 3 -->
+              <g class="cam">
+                <line x1="320" y1="30" x2="320" y2="44" stroke="#171B1E" stroke-width="3"/>
+                <rect x="300" y="44" width="40" height="26" rx="3" fill="#171B1E"/>
+                <circle cx="320" cy="57" r="7" fill="#FBFBFA"/>
+                <circle cx="320" cy="57" r="3.5" fill="#33587A"/>
+                <circle class="camLed" cx="333" cy="50" r="2.4" fill="#E08D00"/>
+                <path d="M320 70 L260 300 M320 70 L380 300" stroke="rgba(51,88,122,0.25)" stroke-width="1" stroke-dasharray="4 6"/>
+              </g>
             </g>
 
             <!-- conveyor -->
             <g id="belt">
-              <rect x="20" y="300" width="480" height="22" rx="4" fill="#171B1E"/>
+              <rect x="20" y="300" width="380" height="22" rx="4" fill="#171B1E"/>
               <g id="beltMarks"></g>
               <circle cx="44" cy="311" r="7" fill="#FBFBFA" stroke="#171B1E" stroke-width="2"/>
-              <circle cx="476" cy="311" r="7" fill="#FBFBFA" stroke="#171B1E" stroke-width="2"/>
+              <circle cx="376" cy="311" r="7" fill="#FBFBFA" stroke="#171B1E" stroke-width="2"/>
               <line x1="60" y1="322" x2="48" y2="344" stroke="#171B1E" stroke-width="3"/>
-              <line x1="460" y1="322" x2="472" y2="344" stroke="#171B1E" stroke-width="3"/>
+              <line x1="384" y1="322" x2="396" y2="344" stroke="#171B1E" stroke-width="3"/>
             </g>
 
             <!-- packages + detection overlays are created by JS -->
             <g id="pkgLayer"></g>
             <g id="detLayer"></g>
+
+            <!-- pick-and-place robot at the end of the line -->
+            <g id="picker">
+              <!-- pedestal + column -->
+              <rect x="428" y="330" width="72" height="14" rx="2" fill="#171B1E"/>
+              <rect x="448" y="200" width="20" height="130" rx="3" fill="#171B1E"/>
+              <!-- boom over the belt -->
+              <rect x="340" y="196" width="120" height="12" rx="3" fill="#171B1E"/>
+              <circle cx="458" cy="202" r="5" fill="#FBFBFA" stroke="#171B1E" stroke-width="2"/>
+              <!-- z-axis carriage (fixed) -->
+              <rect x="348" y="190" width="16" height="24" rx="2" fill="#33587A"/>
+              <!-- sliding rod + gripper (animated) -->
+              <g id="zRod">
+                <rect x="352" y="214" width="8" height="8" fill="#171B1E"/>
+                <rect x="342" y="222" width="28" height="10" rx="2" fill="#171B1E"/>
+                <rect x="344" y="232" width="5" height="14" fill="#171B1E"/>
+                <rect x="363" y="232" width="5" height="14" fill="#171B1E"/>
+              </g>
+            </g>
 
             <!-- scan reticle following the cursor -->
             <g id="reticle" opacity="0">
@@ -638,7 +688,7 @@
       <p class="contact-big stagger">Need an engineer who takes perception from <span class="accent">research paper to production line?</span></p>
       <p class="contact-sub stagger">I'm based in the Netherlands and open to robotics software, computer vision, and industrial automation roles. The fastest way to reach me is email.</p>
       <div class="cta-row stagger">
-        <a class="btn btn-primary" href="mailto:narenniranjanpr@gmail.com">✉ narenniranjanpr@gmail.com</a>
+        <a class="btn btn-primary" href="mailto:narenniranjanpr@gmail.com"><span class="mail-ic">✉</span> narenniranjanpr@gmail.com</a>
         <a class="btn btn-ghost" href="tel:+31647618666">☎ +31 6 47618666</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/narenniranjan2910/" target="_blank" rel="noopener"><svg class="li-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z"/></svg> LinkedIn</a>
       </div>
@@ -704,17 +754,21 @@
 
   show(location.hash ? location.hash.replace('#','') : 'home');
 
-  // ---------- computer vision demo: package detection on a conveyor ----------
+  // ---------- computer vision demo: detection + robotic picking ----------
   const SVGNS = 'http://www.w3.org/2000/svg';
   const svg = document.getElementById('cvSvg');
   const pkgLayer = document.getElementById('pkgLayer');
   const detLayer = document.getElementById('detLayer');
   const beltMarks = document.getElementById('beltMarks');
   const reticle = document.getElementById('reticle');
-  const camLed = document.getElementById('camLed');
+  const camLeds = svg.querySelectorAll('.camLed');
+  const zRod = document.getElementById('zRod');
 
   const BELT_Y = 300;          // top of belt
+  const BELT_SPEED = 0.7;      // constant conveyor speed (px per frame @60fps)
   const SCAN_R = 90;           // detection radius around cursor
+  const PICK_X = 356;          // gripper centreline
+  const GRIP_BOTTOM = 232;     // gripper pad bottom y when zOff = 0
   const CLASSES = ['pkg', 'box', 'crate'];
   const KRAFT = ['#C9A876', '#B99763', '#D4B788'];
 
@@ -727,7 +781,7 @@
 
   // belt tread marks (animated to show belt motion)
   const marks = [];
-  for (let i = 0; i < 12; i++){
+  for (let i = 0; i < 9; i++){
     marks.push(el('line', {x1:0, y1:BELT_Y+4, x2:0, y2:BELT_Y+18, stroke:'rgba(251,251,250,0.35)', 'stroke-width':2}, beltMarks));
   }
 
@@ -738,7 +792,7 @@
     const h = 34 + Math.random()*26;
     const g = el('g', {}, pkgLayer);
     const fill = KRAFT[Math.floor(Math.random()*KRAFT.length)];
-    const body = el('rect', {width:w, height:h, rx:2, fill:fill, stroke:'#171B1E', 'stroke-width':2}, g);
+    el('rect', {width:w, height:h, rx:2, fill:fill, stroke:'#171B1E', 'stroke-width':2}, g);
     el('line', {x1:w/2, y1:0, x2:w/2, y2:h, stroke:'rgba(23,27,30,0.35)', 'stroke-width':1.5}, g); // tape seam
     el('line', {x1:0, y1:h*0.32, x2:w, y2:h*0.32, stroke:'rgba(23,27,30,0.18)', 'stroke-width':1}, g); // flap line
     // detection overlay: corner brackets + label
@@ -756,22 +810,20 @@
     return {
       g, d, lbl, lblBg, w, h,
       x: startX,
-      speed: 0.55 + Math.random()*0.35,
       z: (0.6 + Math.random()*0.7),                 // pseudo depth in metres
       cls: CLASSES[Math.floor(Math.random()*CLASSES.length)],
       conf: 0.90 + Math.random()*0.09
     };
   }
-  for (let i = 0; i < 4; i++) packages.push(makePackage(i * 150 - 60));
+  for (let i = 0; i < 4; i++) packages.push(makePackage(i * 130 - 60));
 
   function recycle(p){
-    p.x = -120 - Math.random()*80;
+    p.x = -100 - Math.random()*240;   // varied spawn gaps, constant travel speed
     p.w = 46 + Math.random()*34;
     p.h = 34 + Math.random()*26;
     p.z = 0.6 + Math.random()*0.7;
     p.cls = CLASSES[Math.floor(Math.random()*CLASSES.length)];
     p.conf = 0.90 + Math.random()*0.09;
-    p.speed = 0.55 + Math.random()*0.35;
     const body = p.g.querySelector('rect');
     body.setAttribute('width', p.w); body.setAttribute('height', p.h);
     body.setAttribute('fill', KRAFT[Math.floor(Math.random()*KRAFT.length)]);
@@ -787,8 +839,13 @@
   }
 
   let pointer = null;      // {x,y} in SVG coords, or null
-  let scanX = 260;         // auto-scan position when no pointer
+  let scanX = 210;         // auto-scan position when no pointer
   let beltShift = 0;
+
+  // picker state machine
+  let pickState = 'idle';  // idle | descend | lift | fade
+  let held = null;
+  let zOff = 0, zTarget = 0, fadeT = 1;
 
   function svgPoint(ev){
     const pt = svg.createSVGPoint();
@@ -816,47 +873,85 @@
   let frame = 0;
   function step(dt){
     frame++;
-    // belt tread motion
-    beltShift = (beltShift + 0.9*dt) % 40;
+    // belt tread motion — same speed as the packages
+    beltShift = (beltShift + BELT_SPEED*dt) % 352;
     marks.forEach(function(m, i){
-      const x = 30 + ((i*40 + beltShift) % 440);
+      const x = 26 + ((i*40 + beltShift) % 352);
       m.setAttribute('x1', x); m.setAttribute('x2', x - 6);
     });
     // scan center: pointer or auto sweep
     let sx, sy;
     if (pointer){ sx = pointer.x; sy = pointer.y; }
     else {
-      scanX = 260 + 180*Math.sin(frame*0.012);
+      scanX = 210 + 150*Math.sin(frame*0.012);
       sx = scanX; sy = BELT_Y - 40;
     }
-    // camera LED blinks while scanning
-    camLed.setAttribute('fill', (Math.floor(frame/30)%2===0) ? '#E08D00' : '#B26F00');
+    // camera LEDs blink in a staggered pattern while scanning
+    camLeds.forEach(function(l, i){
+      l.setAttribute('fill', ((Math.floor(frame/30) + i) % 2 === 0) ? '#E08D00' : '#B26F00');
+    });
 
     packages.forEach(function(p){
-      p.x += p.speed*dt;
-      if (p.x > 540) recycle(p);
-      const y = BELT_Y - p.h;
+      if (p !== held){
+        p.x += BELT_SPEED*dt;   // one constant conveyor speed for every box
+        if (p.x > 430) recycle(p);
+        // pick trigger: box centre reaches the gripper line while arm is free
+        if (pickState === 'idle' && dt > 0 && Math.abs(p.x + p.w/2 - PICK_X) < 2.5){
+          held = p;
+          p.x = PICK_X - p.w/2;                    // snap under the gripper
+          zTarget = (BELT_Y - p.h) - GRIP_BOTTOM;  // stroke down to the box top
+          pickState = 'descend';
+        }
+      }
+      let y;
+      if (p === held && (pickState === 'lift' || pickState === 'fade')){
+        y = GRIP_BOTTOM + zOff;                    // box travels with the gripper
+      } else {
+        y = BELT_Y - p.h;
+      }
       p.g.setAttribute('transform','translate('+p.x+','+y+')');
       p.d.setAttribute('transform','translate('+p.x+','+y+')');
-      // detection test: package center within scan radius
-      const cx = p.x + p.w/2, cy = y + p.h/2;
-      const dist = Math.hypot(cx - sx, cy - sy);
-      const hit = dist < SCAN_R;
-      if (hit){
-        const conf = Math.max(0.62, p.conf - (dist/SCAN_R)*0.30);
-        const txt = p.cls + ' ' + conf.toFixed(2) + ' · z ' + p.z.toFixed(2) + 'm';
-        p.lbl.textContent = txt;
-        p.lblBg.setAttribute('width', txt.length*6.6 + 12);
-        p.d.setAttribute('opacity', '1');
-      } else {
+      if (p === held){
         p.d.setAttribute('opacity', '0');
+      } else {
+        // detection test: package center within scan radius
+        const cx = p.x + p.w/2, cy = y + p.h/2;
+        const dist = Math.hypot(cx - sx, cy - sy);
+        if (dist < SCAN_R){
+          const conf = Math.max(0.62, p.conf - (dist/SCAN_R)*0.30);
+          const txt = p.cls + ' ' + conf.toFixed(2) + ' · z ' + p.z.toFixed(2) + 'm';
+          p.lbl.textContent = txt;
+          p.lblBg.setAttribute('width', txt.length*6.6 + 12);
+          p.d.setAttribute('opacity', '1');
+        } else {
+          p.d.setAttribute('opacity', '0');
+        }
       }
     });
+
+    // picker cycle: descend -> lift -> fade out -> recycle
+    if (pickState === 'descend'){
+      zOff = Math.min(zTarget, zOff + 2.2*dt);
+      if (zOff >= zTarget) pickState = 'lift';
+    } else if (pickState === 'lift'){
+      zOff = Math.max(0, zOff - 1.6*dt);
+      if (zOff <= 0){ pickState = 'fade'; fadeT = 1; }
+    } else if (pickState === 'fade'){
+      fadeT = Math.max(0, fadeT - 0.05*dt);
+      if (held) held.g.setAttribute('opacity', fadeT);
+      if (fadeT <= 0 && held){
+        held.g.setAttribute('opacity', '1');
+        recycle(held);
+        held = null;
+        pickState = 'idle';
+      }
+    }
+    zRod.setAttribute('transform','translate(0,'+zOff+')');
   }
 
   if (reduced){
     // static layout, detection still follows explicit pointer moves
-    packages.forEach(function(p, i){ p.x = 40 + i*120; p.speed = 0; });
+    packages.forEach(function(p, i){ p.x = 24 + i*80; });
     step(0);
     svg.addEventListener('pointermove', function(){ step(0); });
   } else {
@@ -870,5 +965,23 @@
   }
 })();
 </script>
+
+<!-- ===== Visitor analytics (GoatCounter) =====
+     1. Sign up free at https://www.goatcounter.com and choose a site code (e.g. "naren").
+     2. Replace MYCODE below with that code, then remove this comment wrapper
+        (delete this opening line and the closing line after the second script).
+     GoatCounter is privacy-friendly (no cookies, GDPR-compliant), so no consent
+     banner is needed. The second script also counts hash pages like #experience.
+
+<script data-goatcounter="https://MYCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+  window.addEventListener('hashchange', function(){
+    if (window.goatcounter && window.goatcounter.count){
+      window.goatcounter.count({ path: location.pathname + location.hash });
+    }
+  });
+</script>
+===== end visitor analytics ===== -->
+
 </body>
 </html>
