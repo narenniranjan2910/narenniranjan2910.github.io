@@ -33,6 +33,7 @@
     min-height:100vh;
     display:flex;flex-direction:column;
   }
+  html, body{overflow-x:hidden;max-width:100%;}
   ::selection{background:var(--amber);color:#fff;}
   a{color:var(--steel);text-decoration:none;}
   a:hover{color:var(--amber-deep);}
@@ -289,6 +290,21 @@
     .spec-plate{grid-template-columns:1fr 1fr;}
     .spec-plate div:nth-child(2){border-right:none;}
     .spec-plate div:nth-child(3){border-top:1px solid var(--line-soft);grid-column:1/-1;border-right:none;}
+    .wrap{padding:0 18px;}
+
+    .cta-row{flex-direction:column;align-items:stretch;}
+    .btn{
+      white-space:normal;
+      word-break:break-word;
+      justify-content:center;
+      font-size:13px;
+      padding:11px 14px;
+      text-align:center;
+    }
+
+    h1{font-size:clamp(30px,8.5vw,38px);}
+    .lede{font-size:15.5px;}
+    .contact-big{font-size:clamp(24px,7vw,32px);}
   }
 </style>
 </head>
@@ -622,7 +638,7 @@
       <p class="contact-sub stagger">I'm based in the Netherlands and open to robotics software, computer vision, and industrial automation roles. The fastest way to reach me is email.</p>
       <div class="cta-row stagger">
         <a class="btn btn-primary" href="mailto:narenniranjanpr@gmail.com">✉ narenniranjanpr@gmail.com</a>
-        <a class="btn btn-ghost" href="tel:+31647618666">☎ +31 6 4761866</a>
+        <a class="btn btn-ghost" href="tel:+31647618666">☎ +31 6 47618666</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/narenniranjan2910/" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
       <p class="lang-row stagger">LANGUAGES — <b>Tamil</b> native · <b>English</b> professional · <b>Dutch</b> elementary</p>
