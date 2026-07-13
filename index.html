@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naren Niranjan P R — Robotics Software Engineer</title>
+<meta name="description" content="Portfolio of Naren Niranjan P R — Robotics Software Engineer specialising in industrial robotics, computer vision, and AI-based perception. MSc Robotics, University of Twente.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F3F0;
+    --panel:#FBFBFA;
+    --ink:#171B1E;
+    --ink-soft:#4A5258;
+    --line:#C7CCC6;
+    --line-soft:#DEE1DC;
+    --amber:#E08D00;
+    --amber-deep:#B26F00;
+    --steel:#33587A;
+    --grid:rgba(51,88,122,0.10);
+    --radius:3px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;flex-direction:column;
+  }
+  ::selection{background:var(--amber);color:#fff;}
+  a{color:var(--steel);text-decoration:none;}
+  a:hover{color:var(--amber-deep);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px;width:100%;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(242,243,240,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px;}
+  .brand{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:14px;letter-spacing:.06em;color:var(--ink);display:flex;align-items:center;gap:10px;cursor:pointer;white-space:nowrap;}
+  .brand .dot{width:9px;height:9px;background:var(--amber);border-radius:50%;display:inline-block;flex-shrink:0;}
+  .nav-links{display:flex;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.03em;overflow-x:auto;}
+  .nav-links a{
+    color:var(--ink-soft);padding:6px 12px;border-radius:var(--radius);
+    position:relative;white-space:nowrap;transition:color .2s ease, background .2s ease;
+  }
+  .nav-links a::after{
+    content:"";position:absolute;left:12px;right:12px;bottom:2px;height:2px;
+    background:var(--amber);transform:scaleX(0);transform-origin:left;
+    transition:transform .25s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{transform:scaleX(1);}
+  .nav-links a.active{color:var(--ink);background:var(--panel);}
+  .nav-links a.active::after{transform:scaleX(1);}
+
+  /* ---------- page system ---------- */
+  main{flex:1;overflow-x:hidden;}
+  .page{display:none;}
+  .page.active{display:block;}
+  @keyframes slideInRight{from{opacity:0;transform:translateX(48px);}to{opacity:1;transform:none;}}
+  @keyframes slideInLeft{from{opacity:0;transform:translateX(-48px);}to{opacity:1;transform:none;}}
+  .page.enter-right{animation:slideInRight .45s cubic-bezier(.22,.8,.3,1) both;}
+  .page.enter-left{animation:slideInLeft .45s cubic-bezier(.22,.8,.3,1) both;}
+
+  /* staggered rise for items inside a page */
+  @keyframes rise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+  .page.active .stagger{animation:rise .5s ease both;}
+  .page.active .stagger:nth-child(1){animation-delay:.05s;}
+  .page.active .stagger:nth-child(2){animation-delay:.13s;}
+  .page.active .stagger:nth-child(3){animation-delay:.21s;}
+  .page.active .stagger:nth-child(4){animation-delay:.29s;}
+  .page.active .stagger:nth-child(5){animation-delay:.37s;}
+  .page.active .stagger:nth-child(6){animation-delay:.45s;}
+  .page.active .stagger:nth-child(7){animation-delay:.53s;}
+  .page.active .stagger:nth-child(8){animation-delay:.61s;}
+  .page.active .stagger:nth-child(9){animation-delay:.69s;}
+
+  /* ---------- hero (home) ---------- */
+  .hero{
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:36px 36px;
+    background-position:center;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{
+    display:grid;grid-template-columns:1.08fr .92fr;gap:40px;
+    align-items:center;padding:64px 0 56px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--steel);
+    display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--steel);}
+  h1{
+    font-family:'Chakra Petch',sans-serif;font-weight:700;
+    font-size:clamp(38px,5vw,56px);line-height:1.06;letter-spacing:-0.01em;
+    margin-bottom:20px;
+  }
+  h1 .accent{color:var(--amber-deep);}
+  .lede{font-size:17px;color:var(--ink-soft);max-width:56ch;margin-bottom:26px;}
+  .spec-plate{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    display:grid;grid-template-columns:repeat(3,1fr);
+    margin-bottom:26px;max-width:600px;
+    box-shadow:0 1px 0 rgba(23,27,30,.04);
+  }
+  .spec-plate div{padding:10px 14px;border-right:1px solid var(--line-soft);}
+  .spec-plate div:last-child{border-right:none;}
+  .spec-plate .k{display:block;font-size:10px;letter-spacing:.12em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:2px;}
+  .spec-plate .v{color:var(--ink);font-weight:500;}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{
+    font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:14px;letter-spacing:.05em;
+    padding:11px 20px;border-radius:var(--radius);border:1px solid var(--ink);
+    display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:transparent;
+    transition:transform .12s ease, box-shadow .12s ease, color .12s ease, border-color .12s ease, background .12s ease;
+  }
+  .btn-primary{background:var(--ink);color:#fff;}
+  .btn-primary:hover{background:#000;color:#fff;transform:translateY(-1px);box-shadow:0 3px 0 var(--amber);}
+  .btn-ghost{color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--amber-deep);color:var(--amber-deep);}
+
+  /* arm — clean, no labels */
+  .arm-panel{position:relative;}
+  #cvSvg{display:block;width:100%;height:auto;cursor:crosshair;touch-action:none;filter:drop-shadow(0 2px 2px rgba(23,27,30,.08));}
+
+  /* explore tiles on home */
+  .explore{padding:52px 0 64px;}
+  .explore-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .tile{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 20px;cursor:pointer;position:relative;overflow:hidden;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    display:block;color:var(--ink);
+  }
+  .tile::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber);
+    transform:scaleY(0);transform-origin:top;transition:transform .22s ease;
+  }
+  .tile:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(23,27,30,.10);border-color:var(--steel);color:var(--ink);}
+  .tile:hover::before{transform:scaleY(1);}
+  .tile h3{font-family:'Chakra Petch',sans-serif;font-size:16px;font-weight:600;margin-bottom:6px;}
+  .tile p{font-size:13.5px;color:var(--ink-soft);}
+  .tile .go{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--amber-deep);margin-top:12px;display:inline-block;transition:transform .18s ease;}
+  .tile:hover .go{transform:translateX(4px);}
+
+  /* ---------- inner pages ---------- */
+  .page-body{padding:56px 0 72px;}
+  .page-head{margin-bottom:38px;}
+  h2{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,38px);letter-spacing:-0.005em;}
+  .page-head .sub{color:var(--ink-soft);max-width:64ch;margin-top:8px;}
+  .page-head::after{content:"";display:block;width:56px;height:3px;background:var(--amber);margin-top:16px;border-radius:2px;}
+
+  /* experience */
+  .entry{
+    display:grid;grid-template-columns:190px 1fr;gap:28px;
+    padding:28px 0;border-top:1px solid var(--line-soft);
+  }
+  .entry:first-of-type{border-top:none;padding-top:0;}
+  .entry-meta{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-soft);}
+  .entry-meta .period{color:var(--amber-deep);font-weight:500;display:block;margin-bottom:4px;}
+  .entry h3{font-family:'Chakra Petch',sans-serif;font-size:19px;font-weight:600;margin-bottom:2px;}
+  .entry .org{font-size:13.5px;color:var(--steel);font-weight:500;margin-bottom:10px;font-family:'IBM Plex Mono',monospace;}
+  .entry ul{list-style:none;color:var(--ink-soft);font-size:15px;max-width:72ch;}
+  .entry li{padding-left:18px;position:relative;margin-bottom:8px;}
+  .entry li::before{content:"▸";position:absolute;left:0;color:var(--amber);font-size:12px;top:2px;}
+  .entry li b{color:var(--ink);font-weight:600;}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--steel);
+    border:1px solid var(--line);border-radius:var(--radius);padding:2px 8px;background:var(--panel);
+    transition:transform .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .chip:hover{transform:translateY(-2px);border-color:var(--amber);color:var(--amber-deep);}
+
+  /* projects */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .proj-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;display:flex;flex-direction:column;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .proj-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(23,27,30,.10);border-color:var(--steel);}
+  .proj-card .ptag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:8px;}
+  .proj-card h3{font-family:'Chakra Petch',sans-serif;font-size:18px;font-weight:600;margin-bottom:8px;}
+  .proj-card p{font-size:14.5px;color:var(--ink-soft);flex:1;}
+
+  /* skills */
+  .bom{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .bom-col{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .bom-col:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(23,27,30,.08);border-color:var(--steel);}
+  .bom-col h3{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);padding:12px 16px;border-bottom:1px solid var(--line-soft);
+  }
+  .bom-col .chipset{display:flex;flex-wrap:wrap;gap:6px;padding:14px 16px;}
+  .bom-col .chipset span{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink);
+    border:1px solid var(--line-soft);border-radius:var(--radius);padding:3px 9px;background:var(--paper);
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .bom-col .chipset span:hover{border-color:var(--amber);color:var(--amber-deep);}
+
+  /* education */
+  .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .edu-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .edu-card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(23,27,30,.08);}
+  .edu-card .deg{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:18px;margin-bottom:4px;}
+  .edu-card .school{color:var(--steel);font-size:13.5px;font-family:'IBM Plex Mono',monospace;margin-bottom:10px;}
+  .edu-card p{font-size:14.5px;color:var(--ink-soft);margin-bottom:6px;}
+  .badge{
+    display:inline-block;margin-top:8px;margin-right:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;
+    color:var(--amber-deep);border:1px solid var(--amber);border-radius:var(--radius);padding:2px 8px;
+  }
+  .award-strip{
+    margin-top:20px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 22px;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;
+  }
+  .award-strip .tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber-deep);white-space:nowrap;}
+  .award-strip p{font-size:14.5px;color:var(--ink-soft);}
+  .award-strip b{color:var(--ink);}
+
+  /* contact */
+  .contact-big{
+    font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(28px,4vw,44px);
+    line-height:1.15;max-width:22ch;margin-bottom:14px;
+  }
+  .contact-big .accent{color:var(--amber-deep);}
+  .contact-sub{color:var(--ink-soft);max-width:60ch;margin-bottom:26px;}
+  .lang-row{margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);}
+  .lang-row b{color:var(--ink);font-weight:500;}
+
+  /* pager (prev/next at bottom of each page) */
+  .pager{
+    display:flex;justify-content:space-between;gap:12px;margin-top:52px;
+    padding-top:22px;border-top:1px solid var(--line-soft);
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+  }
+  .pager a{display:inline-flex;align-items:center;gap:8px;color:var(--ink-soft);transition:color .15s ease, transform .15s ease;}
+  .pager a:hover{color:var(--amber-deep);}
+  .pager a.next:hover{transform:translateX(4px);}
+  .pager a.prev:hover{transform:translateX(-4px);}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:16px 0 24px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);
+  }
+  footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+
+  @media (prefers-reduced-motion: reduce){
+    .page.enter-right,.page.enter-left{animation:none;}
+    .page.active .stagger{animation:none;}
+    *{transition:none !important;}
+  }
+
+  @media (max-width:940px){
+    .hero-inner{grid-template-columns:1fr;padding:44px 0 40px;}
+    .explore-grid{grid-template-columns:1fr 1fr;}
+    .bom{grid-template-columns:1fr 1fr;}
+    .proj-grid{grid-template-columns:1fr;}
+    .edu-grid{grid-template-columns:1fr;}
+    .entry{grid-template-columns:1fr;gap:8px;}
+  }
+  @media (max-width:620px){
+    .nav{height:auto;flex-direction:column;align-items:flex-start;padding:10px 0;}
+    .explore-grid{grid-template-columns:1fr;}
+    .bom{grid-template-columns:1fr;}
+    .spec-plate{grid-template-columns:1fr 1fr;}
+    .spec-plate div:nth-child(2){border-right:none;}
+    .spec-plate div:nth-child(3){border-top:1px solid var(--line-soft);grid-column:1/-1;border-right:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <span class="brand" data-nav="home"><span class="dot"></span>NAREN NIRANJAN P R</span>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" data-page="home">home</a>
+      <a href="#experience" data-page="experience">experience</a>
+      <a href="#projects" data-page="projects">projects</a>
+      <a href="#skills" data-page="skills">skills</a>
+      <a href="#education" data-page="education">education</a>
+      <a href="#contact" data-page="contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <div class="page" id="page-home">
+    <div class="hero">
+      <div class="wrap hero-inner">
+        <div>
+          <p class="eyebrow stagger">Robotics Software Engineer · Industrial Robotics · Computer Vision · Perception</p>
+          <h1 class="stagger">I teach industrial robots <span class="accent">to see</span> — and ship what they learn to the factory floor.</h1>
+          <p class="lede stagger">
+            Robotics software engineer building AI-based perception for industrial automation:
+            real-time computer vision, sensor fusion, SLAM, and robot programming across
+            FANUC, ABB, and Yaskawa platforms. Currently completing an M.Sc. in Robotics
+            at the University of Twente, researching monocular depth estimation for
+            robotic picking on NVIDIA Jetson.
+          </p>
+          <div class="spec-plate stagger" aria-label="Profile summary">
+            <div><span class="k">Location</span><span class="v">Harderwijk, NL</span></div>
+            <div><span class="k">Focus</span><span class="v">Perception · ROS 2 · Industrial robots</span></div>
+            <div><span class="k">Now</span><span class="v">MSc thesis @ AWL-Techniek</span></div>
+          </div>
+          <div class="cta-row stagger">
+            <a class="btn btn-primary" href="mailto:narenniranjanpr@gmail.com">Get in touch</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/narenniranjan2910/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
+
+        <div class="arm-panel">
+          <svg id="cvSvg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive computer vision demo — move your cursor over the conveyor to detect packages.">
+            <defs>
+              <pattern id="gp" width="26" height="26" patternUnits="userSpaceOnUse">
+                <path d="M26 0H0V26" fill="none" stroke="rgba(51,88,122,0.10)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="520" height="400" fill="url(#gp)"/>
+
+            <!-- camera unit, top center -->
+            <g id="camera">
+              <line x1="260" y1="18" x2="260" y2="52" stroke="#171B1E" stroke-width="3"/>
+              <rect x="236" y="52" width="48" height="30" rx="3" fill="#171B1E"/>
+              <circle cx="260" cy="67" r="8" fill="#FBFBFA"/>
+              <circle cx="260" cy="67" r="4" fill="#33587A"/>
+              <circle id="camLed" cx="276" cy="59" r="2.6" fill="#E08D00"/>
+              <!-- field of view -->
+              <path d="M260 84 L80 300 M260 84 L440 300" stroke="rgba(51,88,122,0.30)" stroke-width="1" stroke-dasharray="4 6"/>
+            </g>
+
+            <!-- conveyor -->
+            <g id="belt">
+              <rect x="20" y="300" width="480" height="22" rx="4" fill="#171B1E"/>
+              <g id="beltMarks"></g>
+              <circle cx="44" cy="311" r="7" fill="#FBFBFA" stroke="#171B1E" stroke-width="2"/>
+              <circle cx="476" cy="311" r="7" fill="#FBFBFA" stroke="#171B1E" stroke-width="2"/>
+              <line x1="60" y1="322" x2="48" y2="344" stroke="#171B1E" stroke-width="3"/>
+              <line x1="460" y1="322" x2="472" y2="344" stroke="#171B1E" stroke-width="3"/>
+            </g>
+
+            <!-- packages + detection overlays are created by JS -->
+            <g id="pkgLayer"></g>
+            <g id="detLayer"></g>
+
+            <!-- scan reticle following the cursor -->
+            <g id="reticle" opacity="0">
+              <circle cx="0" cy="0" r="46" fill="none" stroke="rgba(51,88,122,0.45)" stroke-width="1" stroke-dasharray="5 5"/>
+              <line x1="-10" y1="0" x2="10" y2="0" stroke="#33587A" stroke-width="1.5"/>
+              <line x1="0" y1="-10" x2="0" y2="10" stroke="#33587A" stroke-width="1.5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="explore">
+      <div class="wrap explore-grid">
+        <a class="tile stagger" href="#experience" data-page="experience">
+          <h3>Experience</h3>
+          <span class="go">View →</span>
+        </a>
+        <a class="tile stagger" href="#projects" data-page="projects">
+          <h3>Projects</h3>
+          <span class="go">View →</span>
+        </a>
+        <a class="tile stagger" href="#skills" data-page="skills">
+          <h3>Skills</h3>
+          <span class="go">View →</span>
+        </a>
+        <a class="tile stagger" href="#education" data-page="education">
+          <h3>Education</h3>
+          <span class="go">View →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <div class="page" id="page-experience">
+    <div class="wrap page-body">
+      <div class="page-head stagger">
+        <h2>Experience</h2>
+        <p class="sub">From AI perception on the Jetson Thor to PLC-driven production lines — hands-on work across the full industrial robotics stack.</p>
+      </div>
+
+      <div class="entry stagger">
+        <div class="entry-meta"><span class="period">Feb 2026 — Present</span>Harderwijk, Netherlands</div>
+        <div>
+          <h3>Graduation Thesis — Computer Vision &amp; Robotics Engineer</h3>
+          <p class="org">AWL-Techniek B.V.</p>
+          <ul>
+            <li>Developing an <b>AI-powered perception system</b> using monocular depth estimation to replace expensive RGB-D cameras with standard industrial RGB cameras for robotic picking and palletizing.</li>
+            <li>Deploying depth estimation models (<b>PyTorch → ONNX → TensorRT</b> with CUDA acceleration) on the <b>NVIDIA Jetson Thor</b> embedded GPU platform, achieving real-time inference at <b>30 FPS</b>.</li>
+            <li>Building real-time computer vision pipelines in Python and C++ with semantic segmentation and point cloud processing using Open3D and PCL.</li>
+            <li>Developed a <b>3-camera synchronized perception system</b> with multi-camera sensor fusion — performing intrinsic, extrinsic, and hand-eye calibration to reach <b>sub-centimeter localization accuracy</b> suitable for industrial picking.</li>
+            <li>Integrating perception with <b>FANUC pick-and-place workflows</b>, estimating package pose and coordinates on conveyor systems; collaborating via GitLab and Docker-based development workflows.</li>
+          </ul>
+          <div class="chips"><span class="chip">PyTorch</span><span class="chip">TensorRT</span><span class="chip">Jetson Thor</span><span class="chip">FANUC</span><span class="chip">Open3D</span><span class="chip">PCL</span><span class="chip">Docker</span></div>
+        </div>
+      </div>
+
+      <div class="entry stagger">
+        <div class="entry-meta"><span class="period">Sep 2025 — Jan 2026</span>Enschede, Netherlands</div>
+        <div>
+          <h3>Controls Engineer — Autonomous Robotics</h3>
+          <p class="org">RoboTeam Twente</p>
+          <ul>
+            <li>Designed robotic manipulation algorithms for the <b>European Rover Challenge</b>, supporting robotic arm development for autonomous planetary exploration.</li>
+            <li>Developed and validated <b>inverse kinematics for a custom 4-DOF manipulator</b> using MATLAB, Simulink, and Robotics Toolbox — simulating motion and verifying workspace performance.</li>
+          </ul>
+          <div class="chips"><span class="chip">Inverse kinematics</span><span class="chip">MATLAB</span><span class="chip">Simulink</span><span class="chip">Robotics Toolbox</span></div>
+        </div>
+      </div>
+
+      <div class="entry stagger">
+        <div class="entry-meta"><span class="period">Sep 2025 — Present</span>Enschede, Netherlands</div>
+        <div>
+          <h3>Teaching Assistant — PPD Coach</h3>
+          <p class="org">University of Twente</p>
+          <ul>
+            <li>Facilitated systems engineering and professional development sessions; mentored master's students through engineering design projects.</li>
+          </ul>
+          <div class="chips"><span class="chip">Systems engineering</span><span class="chip">Mentoring</span></div>
+        </div>
+      </div>
+
+      <div class="entry stagger">
+        <div class="entry-meta"><span class="period">Sep 2023 — Jul 2024</span>Chennai, India</div>
+        <div>
+          <h3>Junior Robotics Engineer</h3>
+          <p class="org">Evolve Robot Lab</p>
+          <ul>
+            <li>Developed <b>ROS/ROS 2-based autonomous navigation software</b> in Python and C++ for indoor Autonomous Mobile Robots, covering localization, mapping, and navigation.</li>
+            <li>Implemented <b>LiDAR-based SLAM</b> and fused IMU and LiDAR data, improving localization and mapping accuracy through sensor fusion; validated navigation pipelines on real robotic platforms.</li>
+          </ul>
+          <div class="chips"><span class="chip">ROS 2</span><span class="chip">SLAM</span><span class="chip">LiDAR</span><span class="chip">Sensor fusion</span><span class="chip">AMR</span></div>
+        </div>
+      </div>
+
+      <div class="entry stagger">
+        <div class="entry-meta"><span class="period">May 2023 — Aug 2023</span>Bangalore, India</div>
+        <div>
+          <h3>Robotics &amp; Computer Vision Intern</h3>
+          <p class="org">Greendzine Technologies Pvt. Ltd.</p>
+          <ul>
+            <li>Developed industrial machine vision software in Python and OpenCV, implementing <b>YOLO-based object detection</b>, classification, and image segmentation for robotic perception.</li>
+            <li>Built an end-to-end perception pipeline — from <b>Intel RealSense RGB-D</b> acquisition to 3D object localization and robot coordinate generation — for an <b>ABB industrial manipulator</b> via ROS on Raspberry Pi.</li>
+          </ul>
+          <div class="chips"><span class="chip">OpenCV</span><span class="chip">YOLO</span><span class="chip">RealSense</span><span class="chip">ABB</span><span class="chip">ROS</span></div>
+        </div>
+      </div>
+
+      <div class="entry stagger">
+        <div class="entry-meta"><span class="period">Nov 2022 — Apr 2023</span>Chennai, India</div>
+        <div>
+          <h3>Robotics &amp; Automation Engineering Intern</h3>
+          <p class="org">GGS Engineering Services Pvt. Ltd.</p>
+          <ul>
+            <li>Developed <b>Siemens and Omron PLC programs</b> for industrial line automation and programmed <b>Yaskawa industrial robots</b> for an automated solar panel laying system.</li>
+            <li>Contributed to the design of a <b>Gantry Concrete 3D Printer</b> and special purpose machines — performing actuator sizing, motor and gearbox selection, and transmission design calculations.</li>
+            <li>Evaluated mechanical and electrical components and supported sourcing and system integration for automated manufacturing solutions.</li>
+          </ul>
+          <div class="chips"><span class="chip">Siemens PLC</span><span class="chip">Omron PLC</span><span class="chip">Yaskawa</span><span class="chip">SPM design</span></div>
+        </div>
+      </div>
+
+      <div class="pager">
+        <a class="prev" href="#home" data-page="home">← Home</a>
+        <a class="next" href="#projects" data-page="projects">Projects →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PROJECTS ============ -->
+  <div class="page" id="page-projects">
+    <div class="wrap page-body">
+      <div class="page-head stagger">
+        <h2>Projects</h2>
+        <p class="sub">Selected work beyond industry roles — soft robotics research that earned a national best-paper award.</p>
+      </div>
+      <div class="proj-grid">
+        <div class="proj-card stagger">
+          <p class="ptag">Bachelor's thesis · Best Paper Award, AIIMS 2.0 (2023)</p>
+          <h3>Soft Robotic Biomimetic Gripper</h3>
+          <p>Designed and fabricated a pneumatically actuated soft gripper for FMCG handling using 3D-printed moulds and EcoFlex silicone actuators. Teleoperated via OpenCV hand tracking in Python, with relay-controlled pneumatic valves on Raspberry Pi 4.</p>
+          <div class="chips"><span class="chip">Soft robotics</span><span class="chip">OpenCV</span><span class="chip">Raspberry Pi</span><span class="chip">Pneumatics</span></div>
+        </div>
+        <div class="proj-card stagger">
+          <p class="ptag">Continuum robotics</p>
+          <h3>Soft Robotic Endoscopic Inspection System</h3>
+          <p>Designed a three-chamber soft robotic continuum end-effector with an integrated endoscopic camera, enabling controlled navigation and inspection of narrow, confined pipelines.</p>
+          <div class="chips"><span class="chip">Continuum mechanisms</span><span class="chip">End-effector design</span><span class="chip">Inspection</span></div>
+        </div>
+      </div>
+      <div class="pager">
+        <a class="prev" href="#experience" data-page="experience">← Experience</a>
+        <a class="next" href="#skills" data-page="skills">Skills →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SKILLS ============ -->
+  <div class="page" id="page-skills">
+    <div class="wrap page-body">
+      <div class="page-head stagger">
+        <h2>Technical skills</h2>
+        <p class="sub">The full stack from deep learning inference on embedded GPUs to industrial robot and PLC programming.</p>
+      </div>
+      <div class="bom">
+        <div class="bom-col stagger">
+          <h3>Programming</h3>
+          <div class="chipset"><span>Python</span><span>C++</span><span>C</span><span>MATLAB</span></div>
+        </div>
+        <div class="bom-col stagger">
+          <h3>Robotics frameworks</h3>
+          <div class="chipset"><span>ROS</span><span>ROS 2</span><span>MoveIt</span><span>Simulink</span><span>Robotics Toolbox</span></div>
+        </div>
+        <div class="bom-col stagger">
+          <h3>Computer vision</h3>
+          <div class="chipset"><span>OpenCV</span><span>YOLO</span><span>Semantic segmentation</span><span>Monocular depth estimation</span><span>Object detection</span><span>Pose estimation</span><span>RGB-D / RealSense</span></div>
+        </div>
+        <div class="bom-col stagger">
+          <h3>Industrial robotics</h3>
+          <div class="chipset"><span>FANUC</span><span>ABB</span><span>Yaskawa</span><span>Pick-and-place</span><span>Motion planning</span><span>Inverse kinematics</span></div>
+        </div>
+        <div class="bom-col stagger">
+          <h3>Industrial automation</h3>
+          <div class="chipset"><span>Siemens PLC</span><span>Omron PLC</span><span>PLC programming</span><span>Motion control</span><span>Special purpose machines</span></div>
+        </div>
+        <div class="bom-col stagger">
+          <h3>AI &amp; deep learning</h3>
+          <div class="chipset"><span>PyTorch</span><span>ONNX</span><span>TensorRT</span><span>CUDA</span><span>Model optimization</span><span>Edge inference</span></div>
+        </div>
+        <div class="bom-col stagger">
+          <h3>Perception</h3>
+          <div class="chipset"><span>Sensor fusion</span><span>SLAM</span><span>LiDAR</span><span>IMU</span><span>Point clouds</span><span>PCL</span><span>Open3D</span><span>Camera calibration</span><span>Hand-eye calibration</span><span>Multi-camera systems</span></div>
+        </div>
+        <div class="bom-col stagger">
+          <h3>Embedded systems</h3>
+          <div class="chipset"><span>NVIDIA Jetson</span><span>Raspberry Pi</span><span>Linux</span><span>Edge AI</span><span>Embedded GPU acceleration</span></div>
+        </div>
+        <div class="bom-col stagger">
+          <h3>Tools &amp; CAD</h3>
+          <div class="chipset"><span>Git</span><span>GitLab</span><span>Docker</span><span>SolidWorks</span><span>CREO</span><span>Fusion 360</span><span>AutoCAD</span><span>ANSYS</span></div>
+        </div>
+      </div>
+      <div class="pager">
+        <a class="prev" href="#projects" data-page="projects">← Projects</a>
+        <a class="next" href="#education" data-page="education">Education →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ EDUCATION ============ -->
+  <div class="page" id="page-education">
+    <div class="wrap page-body">
+      <div class="page-head stagger">
+        <h2>Education &amp; awards</h2>
+        <p class="sub">Formal training in robotics and mechanical engineering, with recognition along the way.</p>
+      </div>
+      <div class="edu-grid">
+        <div class="edu-card stagger">
+          <p class="deg">M.Sc. Robotics — Mechatronics &amp; Physical AI</p>
+          <p class="school">University of Twente · Enschede, NL · 2024 — Present</p>
+          <p>Coursework: Software Development for Robotics, Industrial Robotic Systems, Human-Robot Collaboration, Image Processing &amp; Computer Vision, Automated Production Systems, Systems Engineering, Control Systems, Robotics Perception.</p>
+          <span class="badge">Change Leaders Master Honours Programme (2024–2025)</span>
+        </div>
+        <div class="edu-card stagger">
+          <p class="deg">B.Tech. Mechanical &amp; Automation Engineering</p>
+          <p class="school">SRM Institute of Science and Technology · Chennai, IN · 2019 — 2023</p>
+          <p>CGPA 9.37 / 10.0. Foundation in mechanical design, manufacturing, and automation systems.</p>
+          <span class="badge">First Rank, Dept. of Mechanical Engineering (2023)</span>
+          <span class="badge">Baroda Achievers Award — Best All-Rounder (2022)</span>
+        </div>
+      </div>
+      <div class="award-strip stagger">
+        <span class="tag">Publication</span>
+        <p><b>Best Paper Award — AIIMS 2.0 National Conference (2023):</b> "Soft Robotic Biomimetic Hand".</p>
+      </div>
+      <div class="pager">
+        <a class="prev" href="#skills" data-page="skills">← Skills</a>
+        <a class="next" href="#contact" data-page="contact">Contact →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONTACT ============ -->
+  <div class="page" id="page-contact">
+    <div class="wrap page-body">
+      <div class="page-head stagger">
+        <h2>Contact</h2>
+      </div>
+      <p class="contact-big stagger">Need an engineer who takes perception from <span class="accent">research paper to production line?</span></p>
+      <p class="contact-sub stagger">I'm based in the Netherlands and open to robotics software, computer vision, and industrial automation roles. The fastest way to reach me is email.</p>
+      <div class="cta-row stagger">
+        <a class="btn btn-primary" href="mailto:narenniranjanpr@gmail.com">narenniranjanpr@gmail.com</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/narenniranjan2910/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+      <p class="lang-row stagger">LANGUAGES — <b>Tamil</b> native · <b>English</b> professional · <b>Dutch</b> elementary</p>
+      <div class="pager">
+        <a class="prev" href="#education" data-page="education">← Education</a>
+        <a class="next" href="#home" data-page="home">Home →</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Naren Niranjan P R</span>
+    <span>Harderwijk, NL</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---------- page router with slide transitions ----------
+  const ORDER = ['home','experience','projects','skills','education','contact'];
+  const pages = {};
+  ORDER.forEach(function(id){ pages[id] = document.getElementById('page-' + id); });
+  const navLinks = document.querySelectorAll('[data-page]');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let current = null;
+
+  function show(id){
+    if (!pages[id]) id = 'home';
+    if (id === current) return;
+    const fromIdx = current ? ORDER.indexOf(current) : -1;
+    const toIdx = ORDER.indexOf(id);
+    ORDER.forEach(function(p){
+      pages[p].classList.remove('active','enter-right','enter-left');
+    });
+    pages[id].classList.add('active');
+    if (!reduced && fromIdx !== -1){
+      pages[id].classList.add(toIdx > fromIdx ? 'enter-right' : 'enter-left');
+    }
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('data-page') === id);
+    });
+    current = id;
+    window.scrollTo({top:0, behavior: reduced ? 'auto' : 'smooth'});
+  }
+
+  navLinks.forEach(function(el){
+    el.addEventListener('click', function(ev){
+      const id = el.getAttribute('data-page');
+      if (!id) return;
+      ev.preventDefault();
+      if (location.hash !== '#' + id) location.hash = id;
+      else show(id);
+    });
+  });
+
+  window.addEventListener('hashchange', function(){
+    show(location.hash.replace('#',''));
+  });
+
+  show(location.hash ? location.hash.replace('#','') : 'home');
+
+  // ---------- computer vision demo: package detection on a conveyor ----------
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const svg = document.getElementById('cvSvg');
+  const pkgLayer = document.getElementById('pkgLayer');
+  const detLayer = document.getElementById('detLayer');
+  const beltMarks = document.getElementById('beltMarks');
+  const reticle = document.getElementById('reticle');
+  const camLed = document.getElementById('camLed');
+
+  const BELT_Y = 300;          // top of belt
+  const SCAN_R = 90;           // detection radius around cursor
+  const CLASSES = ['pkg', 'box', 'crate'];
+  const KRAFT = ['#C9A876', '#B99763', '#D4B788'];
+
+  function el(tag, attrs, parent){
+    const n = document.createElementNS(SVGNS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(n);
+    return n;
+  }
+
+  // belt tread marks (animated to show belt motion)
+  const marks = [];
+  for (let i = 0; i < 12; i++){
+    marks.push(el('line', {x1:0, y1:BELT_Y+4, x2:0, y2:BELT_Y+18, stroke:'rgba(251,251,250,0.35)', 'stroke-width':2}, beltMarks));
+  }
+
+  // packages
+  const packages = [];
+  function makePackage(startX){
+    const w = 46 + Math.random()*34;
+    const h = 34 + Math.random()*26;
+    const g = el('g', {}, pkgLayer);
+    const fill = KRAFT[Math.floor(Math.random()*KRAFT.length)];
+    const body = el('rect', {width:w, height:h, rx:2, fill:fill, stroke:'#171B1E', 'stroke-width':2}, g);
+    el('line', {x1:w/2, y1:0, x2:w/2, y2:h, stroke:'rgba(23,27,30,0.35)', 'stroke-width':1.5}, g); // tape seam
+    el('line', {x1:0, y1:h*0.32, x2:w, y2:h*0.32, stroke:'rgba(23,27,30,0.18)', 'stroke-width':1}, g); // flap line
+    // detection overlay: corner brackets + label
+    const d = el('g', {opacity:0}, detLayer);
+    const P = 6; // padding around box
+    const C = 10; // corner length
+    const path = 'M'+(-P)+' '+(C-P)+' V'+(-P)+' H'+(C-P)+
+                 ' M'+(w+P-C)+' '+(-P)+' H'+(w+P)+' V'+(C-P)+
+                 ' M'+(w+P)+' '+(h+P-C)+' V'+(h+P)+' H'+(w+P-C)+
+                 ' M'+(C-P)+' '+(h+P)+' H'+(-P)+' V'+(h+P-C);
+    el('path', {d:path, fill:'none', stroke:'#E08D00', 'stroke-width':2.5, 'stroke-linecap':'round'}, d);
+    const lblBg = el('rect', {x:-P, y:-P-22, width:118, height:17, rx:2, fill:'#171B1E'}, d);
+    const lbl = el('text', {x:-P+6, y:-P-9.5, fill:'#FBFBFA', 'font-size':'10.5',
+      'font-family':"'IBM Plex Mono',monospace", 'letter-spacing':'0.4'}, d);
+    return {
+      g, d, lbl, lblBg, w, h,
+      x: startX,
+      speed: 0.55 + Math.random()*0.35,
+      z: (0.6 + Math.random()*0.7),                 // pseudo depth in metres
+      cls: CLASSES[Math.floor(Math.random()*CLASSES.length)],
+      conf: 0.90 + Math.random()*0.09
+    };
+  }
+  for (let i = 0; i < 4; i++) packages.push(makePackage(i * 150 - 60));
+
+  function recycle(p){
+    p.x = -120 - Math.random()*80;
+    p.w = 46 + Math.random()*34;
+    p.h = 34 + Math.random()*26;
+    p.z = 0.6 + Math.random()*0.7;
+    p.cls = CLASSES[Math.floor(Math.random()*CLASSES.length)];
+    p.conf = 0.90 + Math.random()*0.09;
+    p.speed = 0.55 + Math.random()*0.35;
+    const body = p.g.querySelector('rect');
+    body.setAttribute('width', p.w); body.setAttribute('height', p.h);
+    body.setAttribute('fill', KRAFT[Math.floor(Math.random()*KRAFT.length)]);
+    const lines = p.g.querySelectorAll('line');
+    lines[0].setAttribute('x1', p.w/2); lines[0].setAttribute('x2', p.w/2); lines[0].setAttribute('y2', p.h);
+    lines[1].setAttribute('y1', p.h*0.32); lines[1].setAttribute('y2', p.h*0.32); lines[1].setAttribute('x2', p.w);
+    const P = 6, C = 10, w = p.w, h = p.h;
+    p.d.querySelector('path').setAttribute('d',
+      'M'+(-P)+' '+(C-P)+' V'+(-P)+' H'+(C-P)+
+      ' M'+(w+P-C)+' '+(-P)+' H'+(w+P)+' V'+(C-P)+
+      ' M'+(w+P)+' '+(h+P-C)+' V'+(h+P)+' H'+(w+P-C)+
+      ' M'+(C-P)+' '+(h+P)+' H'+(-P)+' V'+(h+P-C));
+  }
+
+  let pointer = null;      // {x,y} in SVG coords, or null
+  let scanX = 260;         // auto-scan position when no pointer
+  let beltShift = 0;
+
+  function svgPoint(ev){
+    const pt = svg.createSVGPoint();
+    const e = ev.touches ? ev.touches[0] : ev;
+    pt.x = e.clientX; pt.y = e.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+
+  svg.addEventListener('pointermove', function(ev){
+    pointer = svgPoint(ev);
+    reticle.setAttribute('opacity','1');
+    reticle.setAttribute('transform','translate('+pointer.x+','+pointer.y+')');
+  });
+  svg.addEventListener('pointerleave', function(){
+    pointer = null;
+    reticle.setAttribute('opacity','0');
+  });
+  svg.addEventListener('touchmove', function(ev){
+    ev.preventDefault();
+    pointer = svgPoint(ev);
+    reticle.setAttribute('opacity','1');
+    reticle.setAttribute('transform','translate('+pointer.x+','+pointer.y+')');
+  }, {passive:false});
+
+  let frame = 0;
+  function step(dt){
+    frame++;
+    // belt tread motion
+    beltShift = (beltShift + 0.9*dt) % 40;
+    marks.forEach(function(m, i){
+      const x = 30 + ((i*40 + beltShift) % 440);
+      m.setAttribute('x1', x); m.setAttribute('x2', x - 6);
+    });
+    // scan center: pointer or auto sweep
+    let sx, sy;
+    if (pointer){ sx = pointer.x; sy = pointer.y; }
+    else {
+      scanX = 260 + 180*Math.sin(frame*0.012);
+      sx = scanX; sy = BELT_Y - 40;
+    }
+    // camera LED blinks while scanning
+    camLed.setAttribute('fill', (Math.floor(frame/30)%2===0) ? '#E08D00' : '#B26F00');
+
+    packages.forEach(function(p){
+      p.x += p.speed*dt;
+      if (p.x > 540) recycle(p);
+      const y = BELT_Y - p.h;
+      p.g.setAttribute('transform','translate('+p.x+','+y+')');
+      p.d.setAttribute('transform','translate('+p.x+','+y+')');
+      // detection test: package center within scan radius
+      const cx = p.x + p.w/2, cy = y + p.h/2;
+      const dist = Math.hypot(cx - sx, cy - sy);
+      const hit = dist < SCAN_R;
+      if (hit){
+        const conf = Math.max(0.62, p.conf - (dist/SCAN_R)*0.30);
+        const txt = p.cls + ' ' + conf.toFixed(2) + ' · z ' + p.z.toFixed(2) + 'm';
+        p.lbl.textContent = txt;
+        p.lblBg.setAttribute('width', txt.length*6.6 + 12);
+        p.d.setAttribute('opacity', '1');
+      } else {
+        p.d.setAttribute('opacity', '0');
+      }
+    });
+  }
+
+  if (reduced){
+    // static layout, detection still follows explicit pointer moves
+    packages.forEach(function(p, i){ p.x = 40 + i*120; p.speed = 0; });
+    step(0);
+    svg.addEventListener('pointermove', function(){ step(0); });
+  } else {
+    let last = performance.now();
+    (function loop(now){
+      const dt = Math.min(2.5, (now - last)/16.7);
+      last = now;
+      step(dt);
+      requestAnimationFrame(loop);
+    })(performance.now());
+  }
+})();
+</script>
+</body>
+</html>
