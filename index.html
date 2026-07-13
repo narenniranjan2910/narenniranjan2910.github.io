@@ -340,7 +340,7 @@
       <div class="wrap hero-inner">
         <div>
           <h1 class="stagger">Naren Niranjan P R</h1>
-          <p class="hero-sub stagger">Robotics Software Engineer · Industrial Robotics · Computer Vision · Perception</p>
+          <p class="hero-sub stagger">Robotics Software Engineer · Computer Vision · Perception · Industrial Robotics</p>
           <p class="tagline stagger">From <span class="accent">pixels to picks</span> — vision software that puts industrial robots to work.</p>
           <p class="lede stagger">
             I build AI-based perception for industrial automation — real-time computer
@@ -816,10 +816,18 @@
       conf: 0.90 + Math.random()*0.09
     };
   }
-  for (let i = 0; i < 4; i++) packages.push(makePackage(i * 130 - 60));
+  (function(){
+    // spawn boxes back-to-front with guaranteed gaps so they never overlap
+    let sx = 320;
+    for (let i = 0; i < 4; i++){
+      const p = makePackage(0);
+      p.x = sx - p.w;
+      sx = p.x - (50 + Math.random()*90);
+      packages.push(p);
+    }
+  })();
 
   function recycle(p){
-    p.x = -100 - Math.random()*240;   // varied spawn gaps, constant travel speed
     p.w = 46 + Math.random()*34;
     p.h = 34 + Math.random()*26;
     p.z = 0.6 + Math.random()*0.7;
@@ -837,6 +845,12 @@
       ' M'+(w+P-C)+' '+(-P)+' H'+(w+P)+' V'+(C-P)+
       ' M'+(w+P)+' '+(h+P-C)+' V'+(h+P)+' H'+(w+P-C)+
       ' M'+(C-P)+' '+(h+P)+' H'+(-P)+' V'+(h+P-C));
+    // respawn behind the leftmost box with a varied gap: boxes appear one by
+    // one and, since everything travels at one speed, gaps are preserved
+    let minX = Infinity;
+    packages.forEach(function(q){ if (q !== p) minX = Math.min(minX, q.x); });
+    const gap = 40 + Math.random()*140;
+    p.x = Math.min(-60, minX) - gap - p.w;
   }
 
   let pointer = null;      // {x,y} in SVG coords, or null
@@ -892,17 +906,31 @@
       l.setAttribute('fill', ((Math.floor(frame/30) + i) % 2 === 0) ? '#E08D00' : '#B26F00');
     });
 
-    packages.forEach(function(p){
+    // movement pass, front-to-back: a box can never run into the one ahead
+    const sorted = packages.slice().sort(function(a,b){ return b.x - a.x; });
+    let frontLimit = Infinity;
+    sorted.forEach(function(p){
+      let respawned = false;
       if (p !== held){
         p.x += BELT_SPEED*dt;   // one constant conveyor speed for every box
-        if (p.x > 430) recycle(p);
-        // pick trigger: box centre reaches the gripper line while arm is free
-        if (pickState === 'idle' && dt > 0 && Math.abs(p.x + p.w/2 - PICK_X) < 2.5){
-          held = p;
-          p.x = PICK_X - p.w/2;                    // snap under the gripper
-          zTarget = (BELT_Y - p.h) - GRIP_BOTTOM;  // stroke down to the box top
-          pickState = 'descend';
+        if (p.x > 430){
+          recycle(p);
+          respawned = true;
+        } else if (p.x + p.w > frontLimit - 14){
+          p.x = frontLimit - 14 - p.w;   // queue up behind the box ahead
         }
+      }
+      const airborne = (p === held && (pickState === 'lift' || pickState === 'fade'));
+      if (!respawned && !airborne) frontLimit = Math.min(frontLimit, p.x);
+    });
+
+    packages.forEach(function(p){
+      // pick trigger: box centre reaches the gripper line while arm is free
+      if (p !== held && pickState === 'idle' && dt > 0 && Math.abs(p.x + p.w/2 - PICK_X) < 2.5){
+        held = p;
+        p.x = PICK_X - p.w/2;                    // snap under the gripper
+        zTarget = (BELT_Y - p.h) - GRIP_BOTTOM;  // stroke down to the box top
+        pickState = 'descend';
       }
       let y;
       if (p === held && (pickState === 'lift' || pickState === 'fade')){
@@ -952,7 +980,8 @@
 
   if (reduced){
     // static layout, detection still follows explicit pointer moves
-    packages.forEach(function(p, i){ p.x = 24 + i*80; });
+    let xx = 20;
+    packages.forEach(function(p){ p.x = xx; xx += p.w + 24; });
     step(0);
     svg.addEventListener('pointermove', function(){ step(0); });
   } else {
