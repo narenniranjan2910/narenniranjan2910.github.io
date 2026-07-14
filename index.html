@@ -159,6 +159,14 @@
   /* arm — clean, no labels */
   .arm-panel{position:relative;}
   #cvSvg{display:block;width:100%;height:auto;cursor:crosshair;touch-action:none;filter:drop-shadow(0 2px 2px rgba(23,27,30,.08));}
+  #demoToggle{
+    position:absolute;right:8px;bottom:8px;z-index:2;
+    width:32px;height:32px;border-radius:var(--radius);
+    border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);
+    font-size:13px;line-height:1;cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  #demoToggle:hover{border-color:var(--amber-deep);color:var(--amber-deep);}
 
   /* ---------- timeline (home) ---------- */
   .tl-section{padding:48px 0 8px;}
@@ -483,6 +491,7 @@
         </div>
 
         <div class="arm-panel">
+          <button id="demoToggle" type="button" aria-label="Pause animation">⏸</button>
           <svg id="cvSvg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive demo — a three-camera vision system watches a conveyor while an articulated robot arm picks packages and places them on a pallet. Move your cursor to detect packages and read their estimated (x, y, z) pose in metres.">
             <defs>
               <pattern id="gp" width="26" height="26" patternUnits="userSpaceOnUse">
@@ -1429,21 +1438,33 @@
     drawArm();
   }
 
-  if (reduced){
-    // static layout, detection still follows explicit pointer moves
-    let xx = 20;
-    packages.forEach(function(p){ p.x = xx; xx += p.w + 24; });
-    step(0);
-    svg.addEventListener('pointermove', function(){ step(0); });
-  } else {
-    let last = performance.now();
-    (function loop(now){
-      const dt = Math.min(2.5, (now - last)/16.7);
-      last = now;
-      step(dt);
-      requestAnimationFrame(loop);
-    })(performance.now());
+  // The conveyor demo always animates — it's the core content of the page,
+  // not decoration. Reduced-motion users get a pause control instead.
+  const toggleBtn = document.getElementById('demoToggle');
+  let playing = true;
+  let last = performance.now();
+  let rafId = null;
+  function loop(now){
+    const dt = Math.min(2.5, (now - last)/16.7);
+    last = now;
+    step(dt);
+    rafId = requestAnimationFrame(loop);
   }
+  function setPlaying(on){
+    playing = on;
+    if (toggleBtn){
+      toggleBtn.textContent = on ? '⏸' : '▶';
+      toggleBtn.setAttribute('aria-label', on ? 'Pause animation' : 'Play animation');
+    }
+    if (on){ last = performance.now(); rafId = requestAnimationFrame(loop); }
+    else if (rafId !== null){ cancelAnimationFrame(rafId); rafId = null; }
+  }
+  if (toggleBtn) toggleBtn.addEventListener('click', function(){ setPlaying(!playing); });
+  // honour reduced-motion by starting paused-capable but still moving slowly?
+  // No — start playing for everyone; reduced-motion users can hit pause.
+  setPlaying(true);
+  // while paused, detection still follows the cursor
+  svg.addEventListener('pointermove', function(){ if (!playing) step(0); });
 })();
 </script>
 
