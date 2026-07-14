@@ -52,7 +52,12 @@
   .nav{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px;}
   .brand{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:14px;letter-spacing:.06em;color:var(--ink);display:flex;align-items:center;gap:10px;cursor:pointer;white-space:nowrap;}
   .brand .dot{width:9px;height:9px;background:var(--amber);border-radius:50%;display:inline-block;flex-shrink:0;}
-  .nav-links{display:flex;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.03em;overflow-x:auto;}
+  .nav-links{
+    display:flex;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.03em;
+    overflow-x:auto;min-width:0;max-width:100%;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .nav-links::-webkit-scrollbar{display:none;}
   .nav-links a{
     color:var(--ink-soft);padding:6px 12px;border-radius:var(--radius);
     position:relative;white-space:nowrap;transition:color .2s ease, background .2s ease;
@@ -424,6 +429,8 @@
   }
   @media (max-width:620px){
     .nav{height:auto;flex-direction:column;align-items:flex-start;padding:10px 0;}
+    .nav-links{width:100%;flex-wrap:wrap;overflow-x:visible;row-gap:2px;}
+    .nav-links a{padding:6px 10px;}
     .explore-grid{grid-template-columns:1fr;}
     .bom{grid-template-columns:1fr;}
     .stats-grid{grid-template-columns:1fr;}
@@ -606,7 +613,7 @@
           <div class="tl-item"><div class="yr">Sep 2025</div><h4>RoboTeam Twente</h4><p>Controls · European Rover Challenge</p></div>
           <div class="tl-item"><div class="yr">Feb 2026</div><h4>AWL Thesis</h4><p>AI perception for robotic picking</p></div>
           <div class="tl-item"><div class="yr">Sep 2026</div><h4>M.Sc. Robotics</h4><p>Graduation · University of Twente, NL</p></div>
-          <div class="tl-item now"><div class="yr">Oct 2026</div><h4>Available</h4><p>Open to full-time robotics roles</p></div>
+          <div class="tl-item now"><div class="yr">Sep 2026</div><h4>Available</h4><p>Open to full-time robotics roles</p></div>
         </div>
       </div>
     </div>
