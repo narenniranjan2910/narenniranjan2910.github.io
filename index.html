@@ -20,8 +20,42 @@
     --amber-deep:#B26F00;
     --steel:#33587A;
     --grid:rgba(51,88,122,0.10);
+    --header-bg:rgba(242,243,240,0.92);
+    --belt-mark:rgba(251,251,250,0.35);
+    --fov:rgba(51,88,122,0.25);
+    --fov-strong:rgba(51,88,122,0.45);
     --radius:3px;
+    color-scheme:light;
   }
+  [data-theme="dark"]{
+    --paper:#15181B;
+    --panel:#1E2327;
+    --ink:#ECEEE9;
+    --ink-soft:#A9B1B6;
+    --line:#3B434A;
+    --line-soft:#2A3137;
+    --amber:#E9974F;
+    --amber-deep:#F0A85C;
+    --steel:#8FB3D4;
+    --grid:rgba(143,179,212,0.10);
+    --header-bg:rgba(21,24,27,0.90);
+    --belt-mark:rgba(21,24,27,0.45);
+    --fov:rgba(143,179,212,0.28);
+    --fov-strong:rgba(143,179,212,0.5);
+    color-scheme:dark;
+  }
+  /* the SVG demo is drawn with the light-theme hex values; these rules remap
+     them to theme tokens (CSS beats presentation attributes) so the robot,
+     belt, cameras and detection labels stay visible in dark mode */
+  #cvSvg [fill="#171B1E"]{fill:var(--ink);}
+  #cvSvg [stroke="#171B1E"]{stroke:var(--ink);}
+  #cvSvg [fill="#FBFBFA"]{fill:var(--panel);}
+  #cvSvg [fill="#33587A"]{fill:var(--steel);}
+  #cvSvg [stroke="#33587A"]{stroke:var(--steel);}
+  #cvSvg #gp path{stroke:var(--grid);}
+  #cvSvg .cam path{stroke:var(--fov);}
+  #cvSvg #reticle circle{stroke:var(--fov-strong);}
+  #cvSvg #beltMarks line{stroke:var(--belt-mark);}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
     background:var(--paper);
@@ -32,6 +66,7 @@
     -webkit-font-smoothing:antialiased;
     min-height:100vh;
     display:flex;flex-direction:column;
+    transition:background .25s ease, color .25s ease;
   }
   /* overflow-x:hidden on html/body breaks position:sticky — clip keeps the
      horizontal overflow protection without disabling the sticky header */
@@ -45,10 +80,17 @@
   /* ---------- header ---------- */
   header{
     position:sticky;top:0;z-index:50;
-    background:rgba(242,243,240,0.92);
+    background:var(--header-bg);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
+  #themeToggle{
+    flex-shrink:0;width:34px;height:34px;border-radius:var(--radius);
+    border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);
+    font-size:15px;line-height:1;cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  #themeToggle:hover{border-color:var(--amber-deep);color:var(--amber-deep);}
   .nav{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px;}
   .brand{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:14px;letter-spacing:.06em;color:var(--ink);display:flex;align-items:center;gap:10px;cursor:pointer;white-space:nowrap;}
   .brand .dot{width:9px;height:9px;background:var(--amber);border-radius:50%;display:inline-block;flex-shrink:0;}
@@ -132,8 +174,8 @@
     display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:transparent;
     transition:transform .12s ease, box-shadow .12s ease, color .12s ease, border-color .12s ease, background .12s ease;
   }
-  .btn-primary{background:var(--ink);color:#fff;}
-  .btn-primary:hover{background:#000;color:#fff;transform:translateY(-1px);box-shadow:0 3px 0 var(--amber);}
+  .btn-primary{background:var(--ink);color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 3px 0 var(--amber);filter:brightness(1.08);}
   .btn-ghost{color:var(--ink);}
   .btn-ghost:hover{border-color:var(--amber-deep);color:var(--amber-deep);}
   .btn .li-icon{flex-shrink:0;display:block;}
@@ -284,7 +326,7 @@
     padding:30px 32px;margin-bottom:26px;position:relative;overflow:hidden;
     box-shadow:0 2px 0 var(--amber);
   }
-  .featured .ptag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--amber-deep);display:inline-block;padding:3px 10px;border-radius:var(--radius);margin-bottom:14px;}
+  .featured .ptag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);background:var(--amber-deep);display:inline-block;padding:3px 10px;border-radius:var(--radius);margin-bottom:14px;}
   .featured h3{font-family:'Chakra Petch',sans-serif;font-size:clamp(20px,2.6vw,26px);font-weight:700;margin-bottom:8px;}
   .featured .fsub{color:var(--steel);font-family:'IBM Plex Mono',monospace;font-size:13px;margin-bottom:18px;}
   .fcols{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:8px;}
@@ -361,7 +403,7 @@
 
   /* contact */
   .avail-banner{
-    background:var(--ink);color:#fff;border-radius:var(--radius);
+    background:var(--ink);color:var(--paper);border-radius:var(--radius);
     padding:20px 26px;margin-bottom:28px;
     display:flex;align-items:center;gap:14px;flex-wrap:wrap;
     box-shadow:0 3px 0 var(--amber);
@@ -428,9 +470,10 @@
     .tl-item .yr{margin-top:0;}
   }
   @media (max-width:620px){
-    .nav{height:auto;flex-direction:column;align-items:flex-start;padding:10px 0;}
+    .nav{height:auto;flex-direction:column;align-items:flex-start;padding:10px 0;position:relative;}
     .nav-links{width:100%;flex-wrap:wrap;overflow-x:visible;row-gap:2px;}
     .nav-links a{padding:6px 10px;}
+    #themeToggle{position:absolute;top:8px;right:0;}
     .explore-grid{grid-template-columns:1fr;}
     .bom{grid-template-columns:1fr;}
     .stats-grid{grid-template-columns:1fr;}
@@ -472,6 +515,7 @@
       <a href="#education" data-page="education">Education</a>
       <a href="#contact" data-page="contact">Contact</a>
     </nav>
+    <button id="themeToggle" type="button" aria-label="Switch to dark theme">☾</button>
   </div>
 </header>
 
@@ -1107,6 +1151,26 @@
 
 <script>
 (function(){
+  // ---------- dark / light theme ----------
+  const rootEl = document.documentElement;
+  const themeBtn = document.getElementById('themeToggle');
+  function applyTheme(t){
+    rootEl.setAttribute('data-theme', t);
+    if (themeBtn){
+      themeBtn.textContent = (t === 'dark') ? '☀' : '☾';
+      themeBtn.setAttribute('aria-label', (t === 'dark') ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+    try{ localStorage.setItem('theme', t); }catch(e){ /* storage unavailable — theme still works for this visit */ }
+  }
+  let savedTheme = null;
+  try{ savedTheme = localStorage.getItem('theme'); }catch(e){}
+  applyTheme(savedTheme === 'dark' || savedTheme === 'light'
+    ? savedTheme
+    : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  if (themeBtn) themeBtn.addEventListener('click', function(){
+    applyTheme(rootEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
   // ---------- page router with slide transitions ----------
   const ORDER = ['home','about','experience','projects','skills','education','contact'];
   const pages = {};
